@@ -18,7 +18,6 @@ const RegisterForm = () => {
                         {props => <div>
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 name={props.input.name}
                                 value={props.input.value}
@@ -35,7 +34,6 @@ const RegisterForm = () => {
                         {props => <div>
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 name={props.input.name}
                                 value={props.input.value}
@@ -52,7 +50,6 @@ const RegisterForm = () => {
                         {props => <div>
                             <TextField
                                 margin="normal"
-                                required
                                 fullWidth
                                 name={props.input.name}
                                 value={props.input.value}

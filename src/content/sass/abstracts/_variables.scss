@@ -1,0 +1,28 @@
+$textColor          : #000;
+$backgroundColor    : #fff;
+$darkBackgroundColor: #263238;
+$darkFooterColor    : #181c1f;
+$primaryColor       : #C6D8D5;
+$primaryDarkColor   : #074552;
+$secondaryColor     : #05a;
+$accentColor        : #609;
+$lightGreyColor     : #f0f0f0;
+$mutedColor         : #f6f6f6;
+$whiteColor         : #fafafa;
+
+$colorone      : #F7E3D9;
+$colortwo      : #C6D8D5;
+$base-font-size: 16px !default;
+$mq-responsive : true;
+$mq-breakpoints: (mobile: 320px,
+    mobileLandscape: 480px,
+    tablet: 740px,
+    laptop: 968px,
+    desktop: 1280px,
+    wide: 1600px,
+);
+$mq-static-breakpoint: desktop;
+$mq-show-breakpoints : (mobile, mobileLandscape, tablet, laptop, desktop, wide);
+$rfs-breakpoint      : 1280px;
+$rfs-breakpoint-unit : em;
+$rfs-breakpoint-unit-cache: unit($rfs-breakpoint);

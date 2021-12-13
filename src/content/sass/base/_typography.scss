@@ -1,0 +1,118 @@
+@import "~rfs/scss";
+
+// @font-face {
+//     font-family: Tangiang;
+//     font-weight: 400;
+//     font-style : normal;
+//     src        : url("../../font/tangiang.woff2") format("woff2"),
+//         url("../../font/tangiang.woff") format("woff"),
+//         url("../../font/tangiang.ttf") format("truetype"),
+//         url("../../font/tangiang.eot?#iefix") format("embedded-opentype");
+//     font-display: swap;
+// }
+
+// @font-face {
+//     font-family: Roboto Light;
+//     font-weight: 400;
+//     font-style : normal;
+//     src        : url("../../font/Roboto-Light.woff2") format("woff2"),
+//         url("../../font/Roboto-Light.woff") format("woff"),
+//         url("../../font/Roboto-Light.ttf") format("truetype"),
+//         url("../../font/Roboto-Light.eot?#iefix") format("embedded-opentype");
+//     font-display: swap;
+// }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 p,
+span {
+    margin        : 0;
+    padding       : 0;
+    color         : inherit;
+    text-rendering: optimizeLegibility;
+    word-break    : break-word;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    //font-family: 'Tangiang', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 700;
+    // @include rfs(32px, line-height);
+    @include rfs(0.02rem, letter-spacing);
+}
+
+h1 {
+    @include font-size(62px);
+    @include rfs(72px, line-height);
+}
+
+h2 {
+    @include font-size(2.225rem);
+    @include rfs(36px, line-height);
+}
+
+h3 {
+    @include font-size(2rem)
+}
+
+h4 {
+    @include font-size(1.75rem);
+}
+
+h5 {
+    @include font-size(1.5rem);
+}
+
+h6 {
+    @include font-size(1.25rem);
+}
+
+p,
+span {
+    //font-family: 'Roboto Light', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: normal;
+    @include rfs(32px, line-height);
+    @include rfs(0.02rem, letter-spacing);
+}
+
+p {
+    @include font-size(18px);
+    @include rfs(32px, line-height);
+    @include rfs(0.02rem, letter-spacing);
+    margin: 0;
+    @include rfs(24px, margin-bottom);
+}
+
+span {
+    @include font-size(1rem);
+    @include rfs(1.5rem, line-height);
+    @include rfs(0.01rem, letter-spacing);
+}
+
+a {
+    text-decoration: none;
+    word-break     : break-word;
+    color          : darkorange;
+    transition     : all .25s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+
+    &:hover {
+        // text-decoration: underline;
+        color     : orange;
+        transition: all .25s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    }
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+    //font-family: 'Roboto Light', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
