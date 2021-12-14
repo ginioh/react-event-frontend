@@ -2,13 +2,12 @@ import * as React from "react";
 import { Form, Field } from 'react-final-form';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import { required } from "../util/validation";
-import styles from "./LoginForm.module.scss";
+import { required } from "../../util/validation";
+import styles from "./RegisterForm.module.scss";
 
-const LoginForm = () => {
-    const pre = "loginForm-";
-    const onSubmit = async (data) => { console.log(data) }
-
+const RegisterForm = () => {
+    const pre = "registerForm-";
+    const onSubmit = async (data) => {console.log(data)}
     return <Form
         onSubmit={onSubmit}
         initialValues={{}}
@@ -46,16 +45,32 @@ const LoginForm = () => {
                             /></div>}
                     </Field>
                 </div>
+                <div>
+                    <Field name="confirmPassword" validate={required}>
+                        {props => <div>
+                            <TextField
+                                margin="normal"
+                                fullWidth
+                                name={props.input.name}
+                                value={props.input.value}
+                                onChange={props.input.onChange}
+                                label="Confirm password"
+                                type="password"
+                                id="confirmPassword"
+                            // autoComplete="current-password"
+                            /></div>}
+                    </Field>
+                </div>
                 <Button
                     type="submit"
                     fullWidth
                     variant="contained"
                 >
-                    Sign In
+                    Sign up
                 </Button>
             </form>
         )}
     />
 }
 
-export default LoginForm;
+export default RegisterForm;

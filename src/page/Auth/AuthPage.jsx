@@ -9,8 +9,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import styles from "./AuthPage.module.scss";
-import RegisterForm from "../../form/RegisterForm";
-import LoginForm from "../../form/LoginForm";
+import { RegisterForm } from "../../form/RegisterForm";
+import { LoginForm } from "../../form/LoginForm";
 
 const Copyright = (props) => {
     return (

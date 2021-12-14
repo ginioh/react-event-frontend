@@ -1,3 +1,3 @@
-import Layout from "./Main";
+import Main from "./Main";
 
-export { Layout }
+export { Main }
