@@ -1,3 +1,5 @@
-import httpClient from "../../utils/httpClient";
+import httpClient from "../../util/httpClient";
 
-export default async (id, category) => await httpClient.put(`/categories/${id}`, category);
+const updatePromoterFn = async (id, category) => await httpClient.put(`/promoters/${id}`, category);
+
+export default updatePromoterFn;

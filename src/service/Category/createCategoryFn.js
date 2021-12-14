@@ -1,3 +1,5 @@
 import httpClient from "../../utils/httpClient";
 
-export default async (category) => await httpClient.post(`/categories`, category);
+const createCategoryFn = async (category) => await httpClient.post(`/categories`, category);
+
+export default createCategoryFn;

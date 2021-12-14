@@ -1,4 +1,6 @@
 export default {
     LOGIN: "/",
-    DASHBOARD: "/dashboard"
+    DASHBOARD: "/dashboard",
+    PROMOTERS: "/promoters",
+    CATEGORIES: "/categories"
 }

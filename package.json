@@ -22,6 +22,7 @@
     "react-responsive": "^9.0.0-beta.5",
     "react-router-dom": "^6.1.1",
     "react-scripts": "4.0.3",
+    "react-table": "^7.7.0",
     "rfs": "^9.0.6",
     "sass": "^1.45.0",
     "web-vitals": "^1.0.1"

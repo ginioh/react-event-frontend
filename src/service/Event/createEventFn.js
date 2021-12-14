@@ -1,3 +1,5 @@
-import httpClient from "../../utils/httpClient";
+import httpClient from "../../util/httpClient";
 
-export default async (event) => await httpClient.post(`/events`, event);
+const createEventFn = async (event) => await httpClient.post(`/events`, event);
+
+export default createEventFn;

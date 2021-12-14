@@ -1,4 +1,5 @@
 import * as React from "react";
+import withPromoterService from "../../service/Promoter";
 import CssBaseline from '@mui/material/CssBaseline'
 import MaUTable from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -7,7 +8,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 
 import { useTable } from 'react-table'
-import withEventService from "../../service/Event";
+import useDialog from "../../hook/useDialog";
 import useData from "../../hook/useData";
 
 function Table({ columns, data }) {
@@ -51,41 +52,52 @@ function Table({ columns, data }) {
     )
 }
 
-const DashboardPage = ({readEvents}) => {
+const PromoterPage = ({ readPromoters }) => {
     const documents = useData();
+    const createDialog = useDialog();
+    const updateDialog = useDialog();
+    const deleteDialog = useDialog();
 
-    const columns = React.useMemo(
-        () => [
-            {
-                Header: 'Name',
-                accessor: 'title'
-            },
-            {
-                Header: 'Info',
-                accessor: ''
-            },
-        ],
-        []
-    )
+    const columns = [
+        {
+            Header: () => null,
+            id: 'logo',
+            cell: ({ row }) => <span>LOGO</span>
+        },
+        {
+            Header: 'Name',
+            accessor: 'name'
+        },
+        {
+            Header: 'Description',
+            accessor: 'description'
+        },
+        {
+            Header: 'Website',
+            accessor: 'website'
+        },
+        {
+            Header: 'Email',
+            accessor: 'email'
+        },
+    ];
 
     React.useEffect(() => {
-        readEvents.refetch();
+        readPromoters.refetch();
     }, [])
 
     React.useEffect(() => {
-        if (readEvents.data) {
-            const docs = readEvents.data
+        if (readPromoters.data) {
+            const docs = readPromoters.data
             const totalDocs = 0;
             documents.handleDocs(docs, totalDocs);
         }
-    }, [readEvents.data]);
+    }, [readPromoters.data]);
 
-    return (
-        <div>
-            <CssBaseline />
-            <Table columns={columns} data={documents.docs || []} />
-        </div>
-    )
+    return <div>
+        <CssBaseline />
+        <Table columns={columns} data={[]} />
+    </div>
 }
 
-export default withEventService(DashboardPage);
+export default withPromoterService(PromoterPage);

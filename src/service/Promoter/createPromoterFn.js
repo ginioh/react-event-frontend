@@ -1,3 +1,5 @@
-import httpClient from "../../utils/httpClient";
+import httpClient from "../../util/httpClient";
 
-export default async (promo) => await httpClient.post(`/categories`, category);
+const createPromoterFn = async (promoter) => await httpClient.post(`/promoters`, promoter);
+
+export default createPromoterFn;

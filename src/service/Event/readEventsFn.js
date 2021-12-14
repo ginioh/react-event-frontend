@@ -1,4 +1,6 @@
 import httpClient from "../../util/httpClient";
 
-export default async () =>
+const readEventsFn = async () =>
     await httpClient.get(`/events`);
+
+export default readEventsFn;

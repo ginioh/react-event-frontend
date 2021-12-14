@@ -1,4 +1,5 @@
 import httpClient from "../../util/httpClient";
 
-export default async () =>
-    await httpClient.get(`/categories`);
+const readPromotersFn = async () => await httpClient.get(`/promoters`);
+
+export default readPromotersFn;

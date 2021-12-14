@@ -1,34 +1,36 @@
 import React from "react";
 import { useQuery, useMutation } from "react-query"
-import readCategoriesFn from "./readPromotersFn";
-import readCategoryByIdFn from "./readCategoryByIdFn";
-import createCategoryFn from "./createPromoterFn";
-import updateCategoryFn from "./updatePromoterFn";
-import deleteCategoryFn from "./deletePromoterFn";
+import readPromoterByIdFn from "./readPromoterByIdFn";
+import readPromotersFn from "./readPromotersFn";
+import createPromoterFn from "./createPromoterFn";
+import updatePromoterFn from "./updatePromoterFn";
+import deletePromoterFn from "./deletePromoterFn";
 
-function withCategoryService(BaseComponent) {
+function withPromoterService(BaseComponent) {
   return function (props) {
-    const readCategories = useQuery(
-      "readCategories",
-      async () => await readCategoriesFn(),
+    const [id, setId] = React.useState(undefined);
+    
+    const readPromoters = useQuery(
+      "readPromoters",
+      async () => await readPromotersFn(),
       {
         manual: true,
         enabled: false,
       }
     );
 
-    const readCategoryById = useQuery(
-        "readCategoryById",
-        async (id) => await readCategoryByIdFn(id),
+    const readPromoterById = useQuery(
+        ["readPromoterById", {id}],
+        async (id) => await readPromoterByIdFn(id),
         {
           manual: true,
-          enabled: false,
+          enabled: !!id,
         }
       );
 
-    const { mutate: createCategory, status: createCategoryInfo } = useMutation(
+    const { mutate: createPromoter, status: createPromoterInfo } = useMutation(
       async ({ data, createSuccessCb, createErrorCb }) => {
-        return await createCategoryFn(data)
+        return await createPromoterFn(data)
           .then((res) => {
             createSuccessCb();
             return res;
@@ -40,9 +42,9 @@ function withCategoryService(BaseComponent) {
       }
     );
 
-    const { mutate: updateCategory, status: updateCategoryInfo } = useMutation(
+    const { mutate: updatePromoter, status: updatePromoterInfo } = useMutation(
         async ({ data, createSuccessCb, createErrorCb }) => {
-          return await updateCategoryFn(data)
+          return await updatePromoterFn(data)
             .then((res) => {
               createSuccessCb();
               return res;
@@ -54,9 +56,9 @@ function withCategoryService(BaseComponent) {
         }
       );
 
-    const { mutate: deleteCategory, status: deleteCategoryInfo } = useMutation(
+    const { mutate: deletePromoter, status: deletePromoterInfo } = useMutation(
       async ({ id, deleteSuccessCb, deleteErrorCb }) => {
-        return await deleteCategoryFn(id)
+        return await deletePromoterFn(id)
           .then((res) => {
             deleteSuccessCb();
             return res;
@@ -70,18 +72,18 @@ function withCategoryService(BaseComponent) {
 
     return (
       <BaseComponent
-        readCategories={readCategories}
-        readCategoryById={readCategoryById}
-        createCategory={createCategory}
-        createCategoryInfo={createCategoryInfo}
-        updateCategory={updateCategory}
-        updateCategoryInfo={updateCategoryInfo}
-        deleteCategory={deleteCategory}
-        deleteCategoryInfo={deleteCategoryInfo}
+        readPromoters={readPromoters}
+        readPromoterById={readPromoterById}
+        createPromoter={createPromoter}
+        createPromoterInfo={createPromoterInfo}
+        updatePromoter={updatePromoter}
+        updatePromoterInfo={updatePromoterInfo}
+        deletePromoter={deletePromoter}
+        deletePromoterInfo={deletePromoterInfo}
         {...props}
       />
     );
   };
 }
 
-export default withCategoryService;
+export default withPromoterService;

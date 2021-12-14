@@ -1,4 +1,6 @@
 import httpClient from "../../utils/httpClient";
 
-export default async (id) =>
+const readCategoryByIdFn = async (id) =>
     await httpClient.get(`/categories/${id}`);
+
+export default readCategoryByIdFn;
