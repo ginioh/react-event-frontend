@@ -1,8 +1,6 @@
 import * as React from "react";
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -28,6 +26,10 @@ const AuthPage = () => {
     const pre = "authPage-";
 
     const [registerMode, setRegisterMode] = React.useState(false);
+
+    React.useEffect(() => {
+        //TODO: Verify jwt token for redirect
+    }, [])
 
     return <Container className={styles[`${pre}container`]} component="main" maxWidth="xs">
         <CssBaseline />

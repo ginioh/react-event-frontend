@@ -9,12 +9,17 @@ import { IconButton } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import { Navigation } from "./component/Navigation";
 import { AuthProvider } from "./context/Auth/authContext";
-
+import { Layout } from "./component/Layout";
+import { MediaQueriesProvider } from "./context/mediaQueriesContext";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import AdapterMoment from "@mui/lab/AdapterMoment";
 // const keycloak = new Keycloak({
 //   url: `${isDocker() ? process.env.REACT_APP_KEYCLOAK_DOCKER_URL : process.env.REACT_APP_KEYCLOAK_URL}/auth`,
 //   realm: process.env.REACT_APP_KEYCLOAK_REALM,
 //   clientId: process.env.REACT_APP_KEYCLOAK_CLIENTID
 // });
+
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,24 +40,30 @@ const App = () => {
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
-          <SnackbarProvider
-            ref={notistackRef}
-            action={(key) => (
-              <IconButton onClick={onClickDismiss(key)}>
-                <CloseIcon />
-              </IconButton>
-            )}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'center',
-            }}
-            maxSnack={3}>
-            <AuthProvider>
-              <React.Suspense fallback={<CircularProgress />}>
-                <Navigation />
-              </React.Suspense>
-            </AuthProvider>
-          </SnackbarProvider>
+          <LocalizationProvider dateAdapter={AdapterMoment}>
+            <MediaQueriesProvider>
+              <SnackbarProvider
+                ref={notistackRef}
+                action={(key) => (
+                  <IconButton onClick={onClickDismiss(key)}>
+                    <CloseIcon />
+                  </IconButton>
+                )}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center',
+                }}
+                maxSnack={3}>
+                <React.Suspense fallback={<CircularProgress />}>
+                  <AuthProvider>
+                    <Layout>
+                      <Navigation />
+                    </Layout>
+                  </AuthProvider>
+                </React.Suspense>
+              </SnackbarProvider>
+            </MediaQueriesProvider>
+          </LocalizationProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </BrowserRouter>

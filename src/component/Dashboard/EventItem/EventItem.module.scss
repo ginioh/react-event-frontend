@@ -1,0 +1,16 @@
+$pre: ".event-item-";
+
+#{$pre}container {
+    #{$pre}header {
+        #{$pre}subheader {
+            display: flex;
+            flex-direction: column;
+            #{$pre}row {
+                display: flex;
+                // width: 100%;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+    }
+}

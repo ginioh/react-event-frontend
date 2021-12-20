@@ -1,0 +1,23 @@
+@import "~rfs/scss";
+
+$pre: ".toolbar-";
+
+#{$pre}container {
+    height: max-content;
+    // background-color: #fff;
+    // border-radius: 4px;
+    // box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+    //     0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    color: rgba(0, 0, 0, 0.87);
+    @include rfs(0.5rem, margin-left);
+    @include rfs(0.5rem, margin-right);
+    @include rfs(1rem, margin-bottom);
+    #{$pre}wrapper {
+        display: flex;
+        flex-direction: row;
+        // @include rfs(1rem, padding-left);
+        // @include rfs(1rem, padding-right);
+        @include rfs(0.5rem, padding-top);
+        @include rfs(0.5rem, padding-bottom);
+    }
+}

@@ -9,7 +9,7 @@ import deletePromoterFn from "./deletePromoterFn";
 function withPromoterService(BaseComponent) {
   return function (props) {
     const [id, setId] = React.useState(undefined);
-    
+
     const readPromoters = useQuery(
       "readPromoters",
       async () => await readPromotersFn(),
@@ -20,13 +20,13 @@ function withPromoterService(BaseComponent) {
     );
 
     const readPromoterById = useQuery(
-        ["readPromoterById", {id}],
-        async (id) => await readPromoterByIdFn(id),
-        {
-          manual: true,
-          enabled: !!id,
-        }
-      );
+      ["readPromoterById", { id }],
+      async (id) => await readPromoterByIdFn(id),
+      {
+        manual: true,
+        enabled: !!id,
+      }
+    );
 
     const { mutate: createPromoter, status: createPromoterInfo } = useMutation(
       async ({ data, createSuccessCb, createErrorCb }) => {
@@ -43,18 +43,18 @@ function withPromoterService(BaseComponent) {
     );
 
     const { mutate: updatePromoter, status: updatePromoterInfo } = useMutation(
-        async ({ data, createSuccessCb, createErrorCb }) => {
-          return await updatePromoterFn(data)
-            .then((res) => {
-              createSuccessCb();
-              return res;
-            })
-            .catch((err) => {
-              createErrorCb();
-              return err;
-            });
-        }
-      );
+      async ({ data, createSuccessCb, createErrorCb }) => {
+        return await updatePromoterFn(data)
+          .then((res) => {
+            createSuccessCb();
+            return res;
+          })
+          .catch((err) => {
+            createErrorCb();
+            return err;
+          });
+      }
+    );
 
     const { mutate: deletePromoter, status: deletePromoterInfo } = useMutation(
       async ({ id, deleteSuccessCb, deleteErrorCb }) => {

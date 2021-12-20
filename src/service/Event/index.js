@@ -5,9 +5,13 @@ import deleteEventFn from "./deleteEventFn";
 import readEventByIdFn from "./readEventByIdFn";
 import readEventsFn from "./readEventsFn";
 import updateEventFn from "./updateEventFn"
+import { useNavigate } from "react-router-dom";
+// import routesList from "../../util/routesList";
 
 function withEventService(BaseComponent) {
   return function (props) {
+    // const navigate = useNavigate();
+
     const readEvents = useQuery(
       "readEvents",
       async () => await readEventsFn(),

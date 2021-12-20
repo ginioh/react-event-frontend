@@ -1,0 +1,31 @@
+.form-row {
+    margin-top: 16px;
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.category-chip {
+    border: 1px solid rgb(138, 29, 29);
+    border-radius: 3px;
+    background: rgba(161, 39, 39, 0.75);
+    color: #fff;
+    padding: .1rem .25rem;
+    width: max-content;
+}

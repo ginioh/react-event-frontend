@@ -6,10 +6,17 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
-
 import { useTable } from 'react-table'
 import useDialog from "../../hook/useDialog";
 import useData from "../../hook/useData";
+import { IconButton } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CreatePromoterDialog from "./dialog/CreatePromoterDialog";
+import UpdatePromoterDialog from "./dialog/UpdatePromoterDialog";
+import DeletePromoterDialog from "./dialog/DeletePromoterDialog";
+import useAuth from "../../hook/useAuth";
+import { Toolbar } from "../../component/Toolbar";
 
 function Table({ columns, data }) {
     // Use the state and functions returned from useTable to build your UI
@@ -57,12 +64,13 @@ const PromoterPage = ({ readPromoters }) => {
     const createDialog = useDialog();
     const updateDialog = useDialog();
     const deleteDialog = useDialog();
+    const auth = useAuth();
 
     const columns = [
         {
             Header: () => null,
             id: 'logo',
-            cell: ({ row }) => <span>LOGO</span>
+            Cell: ({ row }) => <span>LOGO</span>
         },
         {
             Header: 'Name',
@@ -80,6 +88,18 @@ const PromoterPage = ({ readPromoters }) => {
             Header: 'Email',
             accessor: 'email'
         },
+        {
+            Header: 'Actions',
+            id: 'actions',
+            Cell: ({ row }) => <div>
+                <IconButton onClick={() => updateDialog.handleOpen()}>
+                    <EditIcon />
+                </IconButton>
+                <IconButton onClick={() => deleteDialog.handleOpen()}>
+                    <DeleteIcon />
+                </IconButton>
+            </div>
+        },
     ];
 
     React.useEffect(() => {
@@ -88,7 +108,7 @@ const PromoterPage = ({ readPromoters }) => {
 
     React.useEffect(() => {
         if (readPromoters.data) {
-            const docs = readPromoters.data
+            const { data: docs } = readPromoters.data || []
             const totalDocs = 0;
             documents.handleDocs(docs, totalDocs);
         }
@@ -96,7 +116,16 @@ const PromoterPage = ({ readPromoters }) => {
 
     return <div>
         <CssBaseline />
-        <Table columns={columns} data={[]} />
+        {auth.getUserInfo() && <Toolbar objects={[
+            {
+                name: "Create promoter",
+                onClick: () => createDialog.handleOpen()
+            }
+        ]} />}
+        <Table columns={columns} data={documents.docs} />
+        <CreatePromoterDialog title="Create new promoter" open={createDialog.open} onClose={createDialog.handleClose} />
+        <UpdatePromoterDialog title="Edit promoter" open={updateDialog.open} onClose={updateDialog.handleClose} />
+        <DeletePromoterDialog title="Delete promoter" open={deleteDialog.open} onClose={deleteDialog.handleClose} />
     </div>
 }
 

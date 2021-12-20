@@ -1,0 +1,13 @@
+@import "~rfs/scss";
+
+$pre: ".main-";
+
+#{$pre}container {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    max-width: 1280px;
+    margin-top: 64px;
+    @include rfs(1rem, padding-top);
+    @include rfs(1rem, padding-bottom);
+}

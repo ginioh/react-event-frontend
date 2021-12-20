@@ -1,5 +1,5 @@
 import React from "react";
-import { useQuery, useMutation } from "react-query"
+import { useQuery, useMutation, QueryClient, useQueryClient } from "react-query"
 import readCategoriesFn from "./readCategoriesFn";
 import readCategoryByIdFn from "./readCategoryByIdFn";
 import createCategoryFn from "./createCategoryFn";
@@ -8,6 +8,10 @@ import deleteCategoryFn from "./deleteCategoryFn";
 
 function withCategoryService(BaseComponent) {
   return function (props) {
+    const queryClient = useQueryClient();
+
+    const [id, setId] = React.useState(undefined);
+
     const readCategories = useQuery(
       "readCategories",
       async () => await readCategoriesFn(),
@@ -18,13 +22,16 @@ function withCategoryService(BaseComponent) {
     );
 
     const readCategoryById = useQuery(
-        "readCategoryById",
-        async (id) => await readCategoryByIdFn(id),
-        {
-          manual: true,
-          enabled: false,
-        }
-      );
+      ["readCategoryById", id],
+      async () => {
+        const { data } = await readCategoryByIdFn({ id })
+        return data;
+      },
+      {
+        manual: true,
+        enabled: id ? true : false,
+      }
+    );
 
     const { mutate: createCategory, status: createCategoryInfo } = useMutation(
       async ({ data, createSuccessCb, createErrorCb }) => {
@@ -41,18 +48,18 @@ function withCategoryService(BaseComponent) {
     );
 
     const { mutate: updateCategory, status: updateCategoryInfo } = useMutation(
-        async ({ data, createSuccessCb, createErrorCb }) => {
-          return await updateCategoryFn(data)
-            .then((res) => {
-              createSuccessCb();
-              return res;
-            })
-            .catch((err) => {
-              createErrorCb();
-              return err;
-            });
-        }
-      );
+      async ({ data, createSuccessCb, createErrorCb }) => {
+        return await updateCategoryFn(data)
+          .then((res) => {
+            createSuccessCb();
+            return res;
+          })
+          .catch((err) => {
+            createErrorCb();
+            return err;
+          });
+      }
+    );
 
     const { mutate: deleteCategory, status: deleteCategoryInfo } = useMutation(
       async ({ id, deleteSuccessCb, deleteErrorCb }) => {
@@ -68,8 +75,14 @@ function withCategoryService(BaseComponent) {
       }
     );
 
+    React.useEffect(() => {
+      id === undefined && queryClient.invalidateQueries("readCategoryById");
+    }, [id]);
+
     return (
       <BaseComponent
+        id={id}
+        setId={setId}
         readCategories={readCategories}
         readCategoryById={readCategoryById}
         createCategory={createCategory}

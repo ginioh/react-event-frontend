@@ -2,7 +2,7 @@ import * as React from "react";
 
 const useDialog = () => {
     const [open, setOpen] = React.useState(false);
-    // const [id, setId] = React.useState(undefined);
+    const [id, setId] = React.useState(undefined);
 
     // const openDialog = id => {
     //     setOpen(true);
@@ -14,19 +14,21 @@ const useDialog = () => {
     //     setId(undefined);
     // };
 
-    const handleOpen = (beforeCb, afterCb) => {
+    const handleOpen = (id, beforeCb, afterCb) => {
         // beforeCb && beforeCb();
+        id && setId(id)
         setOpen(true);
         // afterCb && afterCb();
     };
 
     const handleClose = (beforeCb, afterCb) => {
         // beforeCb && beforeCb();
+        setId(undefined)
         setOpen(false);
         // afterCb && afterCb();
     };
 
-    return { open, handleOpen, handleClose };
+    return { open, handleOpen, handleClose, id };
 };
 
 export default useDialog;
