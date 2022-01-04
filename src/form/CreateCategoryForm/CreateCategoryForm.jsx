@@ -4,6 +4,7 @@ import { Form, Field } from 'react-final-form';
 import { required } from "../../util/validation";
 import styles from "./CreateCategoryForm.module.scss";
 import createCategoryInitialValues from "../../form/CreateCategoryForm/initialValues"
+import MaterialUiIconPicker from 'react-material-ui-icon-picker';
 
 const CreateCategoryForm = ({ onSubmit }) => {
     const pre = "categoryForm-";
@@ -42,10 +43,7 @@ const CreateCategoryForm = ({ onSubmit }) => {
                 </Field>
                 <Field name="icon" validate={required}>
                     {props => <label htmlFor="contained-button-file">
-                        <Input {...props.input} accept="image/*" id="contained-button-file" multiple type="file" />
-                        <Button variant="contained" component="span">
-                            Upload
-                        </Button>
+                        <MaterialUiIconPicker onPick={this.showPickedIcon} />
                     </label>}
                 </Field>
             </form>

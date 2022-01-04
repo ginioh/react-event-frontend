@@ -1,17 +1,13 @@
 import * as React from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import useAuth from "../../hook/useAuth";
 import routesList from "../../util/routesList";
-import { Layout } from "../Layout";
+import { AuthContext } from "../../context/Auth/authContext";
 
-const PrivateRoute = ({ children }) => {
+const PrivateRoute = ({ children, roles, ...rest }) => {
     const location = useLocation();
-    const auth = useAuth();
+    const { isAuthorized } = React.useContext(AuthContext);
 
-    const token = auth.getToken();
-
-    if (!token) return <Navigate to={routesList.LOGIN} state={{ path: location.pathname }} />
-    return <Layout>{children}</Layout>
+    return isAuthorized(roles) ? children : <Navigate to={routesList.HOME} replace={true} state={{ path: location.pathname }} />
 };
 
 export default PrivateRoute;

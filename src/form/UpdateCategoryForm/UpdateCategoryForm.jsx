@@ -30,7 +30,7 @@ const UpdateCategoryForm = ({ id, onSubmit, readCategoryById, setId }) => {
         initialValues={item}
         render={({ handleSubmit, submitting, pristine, values }) => {
             return (<form id="createCategoryForm" className={styles[`${pre}container`]} onSubmit={handleSubmit}>
-                <Field name="name" validate={required}>
+                <Field name="name">
                     {props => <div>
                         <TextField
                             {...props.input}
@@ -43,7 +43,7 @@ const UpdateCategoryForm = ({ id, onSubmit, readCategoryById, setId }) => {
                         // autoComplete="current-password"
                         /></div>}
                 </Field>
-                <Field name="description" validate={required}>
+                <Field name="description">
                     {props => <div>
                         <TextField
                             sx={{ mt: "16px", mb: "8px" }}

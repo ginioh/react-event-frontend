@@ -13,6 +13,9 @@ export default createTheme({
       dark: "#8a190e"
     }
   },
+  typography: {
+    htmlFontSize: 16
+  },
   components: {
     MuiToolbar: {
       styleOverrides: {
@@ -27,6 +30,22 @@ export default createTheme({
       styleOverrides: {
         root: {
           backgroundColor: '#ee9b00'
+        }
+      }
+    },
+    MuiDialogActions: {
+      styleOverrides: {
+        root: {
+          padding: "16px 24px"
+        }
+      }
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        head: {
+          fontWeight: "700",
+          // flexDirection: "row",
+          // alignItems: "center",
         }
       }
     }

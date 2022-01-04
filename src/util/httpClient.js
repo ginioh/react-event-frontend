@@ -8,6 +8,8 @@ const httpClient = axios.create({
   timeout: 10000, // 10 seconds
 });
 
+httpClient.defaults.headers.common['access-control-allow-origin'] = '*';
+
 httpClient.interceptors.request.use((config) => {
   const token = auth.getToken();
   if (token) config.headers['Authorization'] = `Bearer ${token}`;
@@ -21,7 +23,8 @@ httpClient.interceptors.response.use((config) => {
   return config;
 }, (error) => {
   if (401 === error.response.status) {
-    return false;
+    // window.location = "/";
+    return "UNAUTHORIZED";
   } else {
     return Promise.reject(error);
   }

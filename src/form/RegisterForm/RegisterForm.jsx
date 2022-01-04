@@ -2,19 +2,23 @@ import * as React from "react";
 import { Form, Field } from 'react-final-form';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import { required } from "../../util/validation";
 import styles from "./RegisterForm.module.scss";
+import { AuthContext } from "../../context/Auth/authContext";
 
 const RegisterForm = () => {
     const pre = "registerForm-";
-    const onSubmit = async (data) => {console.log(data)}
+    const { signup } = React.useContext(AuthContext);
+    const onSubmit = async (data) => {
+        console.log('data', data)
+        await signup(data)
+    }
     return <Form
         onSubmit={onSubmit}
         initialValues={{}}
         render={({ handleSubmit }) => (
             <form className={styles[`${pre}container`]} onSubmit={handleSubmit}>
                 <div>
-                    <Field name="username" validate={required}>
+                    <Field name="username">
                         {props => <div>
                             <TextField
                                 margin="normal"
@@ -30,7 +34,7 @@ const RegisterForm = () => {
                     </Field>
                 </div>
                 <div>
-                    <Field name="password" validate={required}>
+                    <Field name="password">
                         {props => <div>
                             <TextField
                                 margin="normal"
@@ -46,7 +50,7 @@ const RegisterForm = () => {
                     </Field>
                 </div>
                 <div>
-                    <Field name="confirmPassword" validate={required}>
+                    <Field name="confirmPassword">
                         {props => <div>
                             <TextField
                                 margin="normal"

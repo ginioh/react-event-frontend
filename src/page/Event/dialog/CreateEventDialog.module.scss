@@ -1,0 +1,18 @@
+@import "../../../content/sass/abstracts/mq";
+
+$pre: ".create-event-dialog-";
+
+#{$pre}container {
+    > div {
+        > div {
+            @include mq($from: tablet) {
+                width: 85%;
+                max-width: 1000px;
+            }
+            @include mq($from: laptop) {
+                width: 75%;
+                max-width: 1000px;
+            }
+        }
+    }
+}

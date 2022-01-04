@@ -1,7 +1,8 @@
 import * as React from "react";
 import { isEmpty } from "lodash-es";
 
-const TOKEN_KEY = "jwtToken";
+const TOKEN_KEY = "access_token";
+const REFRESH_TOKEN_KEY = "refresh_token"
 const USER_INFO = "userInfo";
 
 const parse = JSON.parse;
@@ -55,6 +56,10 @@ const useAuth = () => {
         return get(tokenKey);
     };
 
+    const getRefreshToken = (tokenKey = REFRESH_TOKEN_KEY) => {
+        return get(tokenKey);
+    };
+
     const getUserInfo = (userInfo = USER_INFO) => {
         return parse(get(userInfo));
     };
@@ -79,6 +84,10 @@ const useAuth = () => {
         return await set(value, tokenKey, isLocalStorage);
     };
 
+    const setRefreshToken = async (value = "", isLocalStorage = false, tokenKey = REFRESH_TOKEN_KEY) => {
+        return await set(value, tokenKey, isLocalStorage);
+    };
+
     const setUserInfo = async (value = "", isLocalStorage = false, userInfo = USER_INFO) => {
         return await set(stringify(value), userInfo, isLocalStorage);
     };
@@ -90,9 +99,11 @@ const useAuth = () => {
         clearUserInfo,
         get,
         getToken,
+        getRefreshToken,
         getUserInfo,
         set,
         setToken,
+        setRefreshToken,
         setUserInfo
     };
 };

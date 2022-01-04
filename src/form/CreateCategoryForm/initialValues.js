@@ -1,5 +1,5 @@
 const initialValues = {
-    title: "",
+    name: "",
     description: "",
     icon: ""
 }

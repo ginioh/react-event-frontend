@@ -1,0 +1,7 @@
+@import "~rfs/scss";
+
+$pre: ".categoryDialog-";
+
+#{$pre}selectedIcon {
+    @include rfs(0.5rem, margin-left);
+}

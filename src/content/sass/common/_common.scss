@@ -1,9 +1,27 @@
+@import "~rfs/scss";
+
 .form-row {
-    margin-top: 16px;
-    margin-bottom: 8px;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    @include mq($from: tablet) {
+        flex-direction: row;
+        justify-content: space-between;
+        > div:nth-of-type(2n) {
+            @include rfs(0.5rem, margin-left);
+        }
+        > div:nth-of-type(2n + 1) {
+            @include rfs(0.5rem, margin-right);
+        }
+    }
+}
+
+.form-column {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 
@@ -26,6 +44,6 @@
     border-radius: 3px;
     background: rgba(161, 39, 39, 0.75);
     color: #fff;
-    padding: .1rem .25rem;
+    padding: 0.1rem 0.25rem;
     width: max-content;
 }

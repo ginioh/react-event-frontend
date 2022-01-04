@@ -1,11 +1,7 @@
 import * as React from "react";
 import withPromoterService from "../../service/Promoter";
-import CssBaseline from '@mui/material/CssBaseline'
+import { CssBaseline, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material'
 import MaUTable from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
 import { useTable } from 'react-table'
 import useDialog from "../../hook/useDialog";
 import useData from "../../hook/useData";
@@ -15,7 +11,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CreatePromoterDialog from "./dialog/CreatePromoterDialog";
 import UpdatePromoterDialog from "./dialog/UpdatePromoterDialog";
 import DeletePromoterDialog from "./dialog/DeletePromoterDialog";
-import useAuth from "../../hook/useAuth";
+import { AuthContext } from "../../context/Auth/authContext"
 import { Toolbar } from "../../component/Toolbar";
 
 function Table({ columns, data }) {
@@ -64,7 +60,8 @@ const PromoterPage = ({ readPromoters }) => {
     const createDialog = useDialog();
     const updateDialog = useDialog();
     const deleteDialog = useDialog();
-    const auth = useAuth();
+
+    const { isAuthorized } = React.useContext(AuthContext)
 
     const columns = [
         {
@@ -102,6 +99,17 @@ const PromoterPage = ({ readPromoters }) => {
         },
     ];
 
+    const toolbarItems = [
+        {
+            name: "Create promoter",
+            onClick: () => createDialog.handleOpen()
+        }
+    ]
+
+    const onCreatePromoter = () => {}
+    const onUpdatePromoter = () => {}
+    const onDeletePromoter = () => {}
+
     React.useEffect(() => {
         readPromoters.refetch();
     }, [])
@@ -116,16 +124,12 @@ const PromoterPage = ({ readPromoters }) => {
 
     return <div>
         <CssBaseline />
-        {auth.getUserInfo() && <Toolbar objects={[
-            {
-                name: "Create promoter",
-                onClick: () => createDialog.handleOpen()
-            }
-        ]} />}
+        <Typography variant="h4">{`Promoters`}</Typography>
+        {isAuthorized(["admin"]) && <Toolbar objects={toolbarItems} />}
         <Table columns={columns} data={documents.docs} />
-        <CreatePromoterDialog title="Create new promoter" open={createDialog.open} onClose={createDialog.handleClose} />
-        <UpdatePromoterDialog title="Edit promoter" open={updateDialog.open} onClose={updateDialog.handleClose} />
-        <DeletePromoterDialog title="Delete promoter" open={deleteDialog.open} onClose={deleteDialog.handleClose} />
+        <CreatePromoterDialog title="Create new promoter" dialog={createDialog} onSubmit={onCreatePromoter} />
+        <UpdatePromoterDialog title="Edit promoter" dialog={updateDialog} onSubmit={onUpdatePromoter} />
+        <DeletePromoterDialog title="Delete promoter" dialog={deleteDialog} onSubmit={onDeletePromoter} />
     </div>
 }
 

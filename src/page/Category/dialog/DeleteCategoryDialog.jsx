@@ -3,14 +3,14 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton }
 import CloseIcon from "@mui/icons-material/Close";
 import { MediaQueriesContext } from "../../../context/mediaQueriesContext";
 
-const DeleteCategoryDialog = ({ title, open, onClose, onSubmit }) => {
+const DeleteCategoryDialog = ({ title, dialog, onSubmit }) => {
     const { isTablet } = React.useContext(MediaQueriesContext);
 
-    return <Dialog open={open} onClose={onClose} fullScreen={!isTablet} aria-labelledby="createEvent">
+    return <Dialog open={dialog.open} onClose={dialog.handleClose} fullScreen={!isTablet} aria-labelledby="createEvent">
         <DialogTitle>
             <div className="form-row">
                 {title}
-                <IconButton onClick={onClose}>
+                <IconButton onClick={dialog.handleClose}>
                     <CloseIcon />
                 </IconButton>
             </div>
@@ -19,7 +19,7 @@ const DeleteCategoryDialog = ({ title, open, onClose, onSubmit }) => {
             Do you want to delete this category?
         </DialogContent>
         <DialogActions>
-            <Button autoFocus onClick={onClose}>CANCEL</Button>
+            <Button autoFocus onClick={dialog.handleClose}>CANCEL</Button>
             <Button
                 // disabled={submitting || pristine} 
                 type="submit" autoFocus variant="contained">CREATE</Button>

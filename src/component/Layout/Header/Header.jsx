@@ -10,7 +10,6 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import routesList from '../../../util/routesList';
 import { toLower } from "lodash-es";
-import styles from "./Header.module.scss";
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -19,14 +18,12 @@ import ListItemText from '@mui/material/ListItemText';
 import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
-import useAuth from "../../../hook/useAuth";
-import { AuthContext } from "../../../context/Auth/authContext";
 import { Divider } from "@mui/material";
+import { useKeycloak } from "@react-keycloak/web";
+import { AuthContext } from "../../../context/Auth/authContext";
 
 const Header = ({ name }) => {
-    const auth = useAuth();
-    const userInfo = auth.getUserInfo();
-
+    const { keycloak } = useKeycloak();
     const { logged } = React.useContext(AuthContext);
     const [drawerOpen, setDrawerOpen] = React.useState(false);
 
@@ -53,36 +50,26 @@ const Header = ({ name }) => {
         setDrawerOpen(open);
     };
 
-    const publicRoutes = [
+    const routes = [
         {
             name: 'Events',
-            url: routesList.HOME,
-            icon: <CelebrationIcon />
-        }
-    ]
-
-    const privateRoutes = [
+            url: routesList.ADMIN_EVENTS,
+            icon: <CelebrationIcon />,
+            role: "admin"
+        },
         {
             name: 'Categories',
             url: routesList.ADMIN_CATEGORIES,
-            icon: <TheaterComedyIcon />
+            icon: <TheaterComedyIcon />,
+            role: "admin"
         },
         {
             name: 'Promoters',
             url: routesList.ADMIN_PROMOTERS,
-            icon: <SupervisedUserCircleIcon />
+            icon: <SupervisedUserCircleIcon />,
+            role: "admin"
         }
     ]
-
-    const [routes, setRoutes] = React.useState(publicRoutes);
-
-    React.useEffect(() => {
-        if (logged !== undefined && logged) {
-            setRoutes(publicRoutes.concat(privateRoutes))
-        } else {
-            setRoutes(publicRoutes)
-        }
-    }, [logged])
 
     const list = () => (
         <Box
@@ -92,19 +79,19 @@ const Header = ({ name }) => {
             onKeyDown={toggleDrawer(false)}
         >
             <List>
-                {logged && userInfo ? <div className="form-row">
+                {keycloak.authenticated ? <div className="form-row">
                     <div className="column">
                         <Typography>Hello,</Typography>
-                        <Typography>{userInfo.name}</Typography>
+                        {/* <Typography>{userInfo.name}</Typography> */}
                     </div>
                 </div> : <>
-                    <ListItem button onClick={() => handleNavigation(routesList.LOGIN)}>
+                    <ListItem button onClick={() => keycloak.login()}>
                         <ListItemIcon>
                             <CelebrationIcon />
                         </ListItemIcon>
                         <ListItemText primary="Login" />
                     </ListItem>
-                    <ListItem sx={{ mt: 0, mb: 0 }} button onClick={() => handleNavigation(routesList.LOGIN)}>
+                    <ListItem sx={{ mt: 0, mb: 0 }} button onClick={() => keycloak.register()}>
                         <ListItemIcon>
                             <CelebrationIcon />
                         </ListItemIcon>
@@ -112,8 +99,8 @@ const Header = ({ name }) => {
                     </ListItem>
                 </>}
                 <Divider />
-                {routes.map((r, i) => (
-                    <ListItem sx={{ mt: 0, mb: 0 }} button key={`${toLower(r.name)}`} onClick={() => handleNavigation(r.url)}>
+                {routes.filter(r => !r.role || keycloak.tokenParsed?.roles?.indexOf(r.role) > -1).map((r, i) => (
+                    <ListItem sx={{ mt: 0, mb: 0 }} button key={`${toLower(r.name)}-${i}`} onClick={() => handleNavigation(r.url)}>
                         <ListItemIcon>
                             {r.icon}
                         </ListItemIcon>
@@ -123,7 +110,7 @@ const Header = ({ name }) => {
             </List>
         </Box>
     );
-
+    
     return <AppBar position="fixed">
         <Container maxWidth="xl">
             <Toolbar disableGutters>
@@ -162,7 +149,7 @@ const Header = ({ name }) => {
                     </div>
                 </Box>
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                    {routes.map((r, i) => (
+                    {routes.filter(r => !r.role || keycloak.tokenParsed?.roles?.indexOf(r.role) > -1).map((r, i) => (
                         <Button
                             key={`${toLower(r.name)}-${i}`}
                             onClick={() => handleNavigation(r.url)}
@@ -179,18 +166,27 @@ const Header = ({ name }) => {
                     component="div"
                     sx={{ mr: 2, display: { xs: 'none', md: 'flex', color: 'white', display: 'block' } }}
                 >
-                    {userInfo ? userInfo.name : <div className="form-row"><Button
-                        onClick={() => navigate(routesList.LOGIN)}
-                        sx={{ my: 2, color: 'white', display: 'block' }}
-                    >
-                        LOGIN
-                    </Button>
-                        <Button
-                            onClick={() => navigate(routesList.LOGIN, { state: { registerMode: true } })}
+                    <div className="form-row">
+                        {keycloak.authenticated ? <><Button variant="contained" color="secondary" size="small" sx={{ mr: 3 }} onClick={() => handleNavigation(routesList.HOME)}>
+                            BACK TO SITE
+                        </Button><Typography sx={{ mr: 2 }}>{`Hello, ${keycloak.idTokenParsed.name}`}</Typography><Button
+                            onClick={() => keycloak.logout({ redirectUri: process.env.REACT_APP_BASE_URL + routesList.HOME })}
                             sx={{ my: 2, color: 'white', display: 'block' }}
                         >
-                            SIGN UP
-                        </Button></div>}
+                                LOGOUT
+                            </Button></> : <><Button
+                                onClick={() => keycloak.login()}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                                LOGIN
+                            </Button>
+                            <Button
+                                onClick={() => keycloak.register()}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                                SIGN UP
+                            </Button></>}
+                    </div>
                 </Typography>
             </Toolbar>
         </Container>

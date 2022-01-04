@@ -1,9 +1,15 @@
+import moment from "moment";
+
 const initialValues = {
     title: "",
     description: "",
-    startDate: new Date(),
-    endDate: new Date(),
+    featuredImage: "",
+    startDate: moment().toISOString(),
+    endDate: moment().toISOString(),
     category: "",
+    promoter: "",
+    url: "",
+    tags: [],
     location: "",
     isOffline: false,
     isPublic: false,

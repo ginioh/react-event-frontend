@@ -1,0 +1,24 @@
+@import "~rfs/scss";
+@import "../../content/sass/abstracts/mq";
+$pre: ".homepage-";
+
+#{$pre}container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    @include rfs(0.5rem, margin-left);
+    @include rfs(0.5rem, margin-right);
+    @include mq($from: tablet) {
+        flex-direction: row;
+    }
+    > div {
+        @include rfs(1rem, margin-bottom);
+        flex-basis: 100%;
+        @include mq($from: tablet) {
+            flex-basis: 50%;
+        }
+        @include mq($from: laptop) {
+            flex-basis: 33.3333%;
+        }
+    }
+}

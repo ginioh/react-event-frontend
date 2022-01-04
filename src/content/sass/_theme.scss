@@ -31,8 +31,8 @@ body {
 }
 
 #root {
-    min-height: 100vh;
-    height    : 100vh;
+    // min-height: 100vh;
+    height    : calc(100vh - 64px - 2rem - 24px);
 }
 
 article,

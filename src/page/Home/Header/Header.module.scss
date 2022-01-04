@@ -1,0 +1,27 @@
+@import "~rfs/scss";
+@import "../../../content/sass/abstracts/variables";
+
+$pre: ".homepage-header-";
+
+#{$pre}container {
+    box-shadow: none !important;
+    #{$pre}button {
+        display: block;
+        @include rfs(0.5rem, margin-top);
+        @include rfs(0.5rem, margin-bottom);
+    }
+}
+
+#{$pre}sidebar-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    @include rfs(16px, padding-left);
+    @include rfs(16px, padding-right);
+    @include rfs(8px, padding-top);
+    @include rfs(8px, padding-bottom);
+    > div {
+        display: flex;
+        flex-direction: column;
+    }
+}

@@ -18,7 +18,7 @@ const LoginForm = () => {
         render={({ handleSubmit }) => (
             <form className={styles[`${pre}container`]} onSubmit={handleSubmit}>
                 <div>
-                    <Field name="username" validate={required}>
+                    <Field name="username">
                         {props => <div>
                             <TextField
                                 margin="normal"
@@ -34,7 +34,7 @@ const LoginForm = () => {
                     </Field>
                 </div>
                 <div>
-                    <Field name="password" validate={required}>
+                    <Field name="password">
                         {props => <div>
                             <TextField
                                 margin="normal"

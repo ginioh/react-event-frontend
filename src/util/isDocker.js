@@ -2,7 +2,7 @@ import fs from 'fs';
 
 let isDockerCached;
 
-function hasDockerEnv() {
+const _hasDockerEnv = () => {
 	try {
 		fs.statSync('/.dockerenv');
 		return true;
@@ -11,7 +11,7 @@ function hasDockerEnv() {
 	}
 }
 
-function hasDockerCGroup() {
+const _hasDockerCGroup = () => {
 	try {
 		return fs.readFileSync('/proc/self/cgroup', 'utf8').includes('docker');
 	} catch {
@@ -19,11 +19,13 @@ function hasDockerCGroup() {
 	}
 }
 
-export default function isDocker() {
+const isDocker = () => {
 	// TODO: Use `??=` when targeting Node.js 16.
 	if (isDockerCached === undefined) {
-		isDockerCached = hasDockerEnv() || hasDockerCGroup();
+		isDockerCached = _hasDockerEnv() || _hasDockerCGroup();
 	}
 
 	return isDockerCached;
 }
+
+export default isDocker;
